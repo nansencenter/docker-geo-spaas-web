@@ -1,0 +1,30 @@
+---
+language: shell
+services:
+  - docker
+
+if: type = pull_request OR tag IS present
+env:
+  global:
+    - IMAGE_NAME="${DOCKER_ORG}/geospaas_web"
+    - DOCKER_TMP_TAG='tmp'
+    - GEOSPAAS_API_VERSION=0.0.1
+install:
+  - docker pull "${IMAGE_NAME}" || true
+script:
+  - >
+    docker build .
+    --cache-from "${IMAGE_NAME}"
+    --build-arg "GEOSPAAS_API_VERSION=$GEOSPAAS_API_VERSION"
+    -t "${IMAGE_NAME}:${DOCKER_TMP_TAG}"
+before_deploy:
+  - docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"
+deploy:
+  provider: script
+  on:
+    tags: true
+  script: >
+          docker tag '${IMAGE_NAME}:${DOCKER_TMP_TAG}' '${IMAGE_NAME}:${TRAVIS_TAG}' &&
+          docker tag '${IMAGE_NAME}:${DOCKER_TMP_TAG}' '${IMAGE_NAME}:latest' &&
+          docker push '${IMAGE_NAME}:${TRAVIS_TAG}' &&
+          docker push '${IMAGE_NAME}:latest'
