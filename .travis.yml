@@ -6,7 +6,7 @@ services:
 if: type = pull_request OR tag IS present
 env:
   global:
-    - IMAGE_NAME="${DOCKER_ORG}/geospaas_web"
+    - IMAGE_NAME="${DOCKER_ORG}/geospaas_uwsgi"
     - DOCKER_TMP_TAG='tmp'
     - GEOSPAAS_API_VERSION=0.0.1
 install:
