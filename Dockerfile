@@ -14,6 +14,8 @@ COPY geospaas_web/ geospaas_web
 COPY uwsgi.ini manage.py start_uwsgi.sh ./
 RUN mkdir -p static
 
+#TODO: add HEALTHCHECK
+
 EXPOSE 3032 9191
 
 CMD ["./start_uwsgi.sh"]
