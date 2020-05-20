@@ -8,7 +8,7 @@ env:
   global:
     - IMAGE_NAME="${DOCKER_ORG}/geospaas_uwsgi"
     - DOCKER_TMP_TAG='tmp'
-    - GEOSPAAS_API_VERSION=0.0.1
+    - GEOSPAAS_API_VERSION=1.0.0
 install:
   - docker pull "${IMAGE_NAME}" || true
 script:
