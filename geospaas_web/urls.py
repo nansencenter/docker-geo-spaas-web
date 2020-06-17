@@ -17,6 +17,5 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path('api/v1/', include('geospaas_rest_api.urls')),
-    path('', include('geospaas.urls')),
+    path('', include('geospaas.urls'))
 ]

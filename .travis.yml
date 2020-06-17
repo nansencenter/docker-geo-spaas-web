@@ -8,14 +8,12 @@ env:
   global:
     - IMAGE_NAME="${DOCKER_ORG}/geospaas_uwsgi"
     - DOCKER_TMP_TAG='tmp'
-    - GEOSPAAS_API_VERSION=1.0.0
 install:
   - docker pull "${IMAGE_NAME}" || true
 script:
   - >
     docker build .
     --cache-from "${IMAGE_NAME}"
-    --build-arg "GEOSPAAS_API_VERSION=$GEOSPAAS_API_VERSION"
     -t "${IMAGE_NAME}:${DOCKER_TMP_TAG}"
 before_deploy:
   - docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"

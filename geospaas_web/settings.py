@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'geospaas.nansat_ingestor',
     'geospaas.catalog',
     'geospaas.vocabularies',
-    'rest_framework',
-    'django_filters',
-    'geospaas_rest_api'
 ]
+EXTRA_APPS = [app_name.strip() for app_name in os.getenv('GEOSPAAS_INSTALLED_APPS', '').split(',')]
+if EXTRA_APPS != ['']:
+    INSTALLED_APPS.extend(EXTRA_APPS)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,6 +52,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+EXTRA_MIDDLEWARE = [mid_name.strip()
+                    for mid_name in os.getenv('GEOSPAAS_MIDDLEWARE', '').split(',')]
+if EXTRA_MIDDLEWARE != ['']:
+    MIDDLEWARE.extend(EXTRA_MIDDLEWARE)
 
 SERIALIZATION_MODULES = {
     "geojson": "django.contrib.gis.serializers.geojson",
@@ -132,13 +136,11 @@ USE_TZ = True
 STATIC_URL = os.getenv('GEOSPAAS_DJANGO_STATIC_URL', '/static/')
 STATIC_ROOT = '/opt/geospaas-app/static'
 
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
-}
 
 # Security
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 31536000
+
+# Extra settings
