@@ -3,7 +3,7 @@ FROM nansencenter/geospaas:v0.4
 # The pip version of uwsgi is not compatible with the conda Python version used in geospaas
 RUN conda install uwsgi
 # There is an incompatibility if those are installed using conda
-RUN pip install django-prometheus djangorestframework markdown django-filter
+RUN pip install djangorestframework markdown django-filter
 
 ARG GEOSPAAS_API_VERSION
 RUN pip install --no-cache-dir https://github.com/nansencenter/django-geo-spaas-rest-api/releases/download/${GEOSPAAS_API_VERSION}/geospaas_rest_api-${GEOSPAAS_API_VERSION}-py3-none-any.whl
