@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'leaflet',
     'django_forms_bootstrap',
-    'geospaas.viewer',
+    'geospaas.base_viewer',
     'geospaas.nansat_ingestor',
     'geospaas.catalog',
     'geospaas.vocabularies',
@@ -55,6 +55,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SERIALIZATION_MODULES = {
+    "geojson": "django.contrib.gis.serializers.geojson",
+}
 
 ROOT_URLCONF = 'geospaas_web.urls'
 

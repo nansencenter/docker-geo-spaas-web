@@ -1,4 +1,4 @@
-FROM nansencenter/geospaas:v0.4
+FROM nansencenter/geospaas:v1.0.0
 
 # The pip version of uwsgi is not compatible with the conda Python version used in geospaas
 RUN conda install uwsgi
