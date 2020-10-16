@@ -1,5 +1,7 @@
 FROM nansencenter/geospaas:2.0.0-slim
 
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${VIRTUAL_ENV}/lib"
+
 RUN apt update && \
     apt install -y gcc && \
     # Disable LTO optimization because the LTO versions from the standard
