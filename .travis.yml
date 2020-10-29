@@ -3,7 +3,7 @@ language: shell
 services:
   - docker
 
-if: type = pull_request OR tag IS present
+if: type = push
 env:
   global:
     - IMAGE_NAME="${DOCKER_ORG}/geospaas_uwsgi"
