@@ -17,5 +17,5 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path('', include('geospaas.urls'))
+    path('', include('geospaas.base_viewer.urls'))
 ]
