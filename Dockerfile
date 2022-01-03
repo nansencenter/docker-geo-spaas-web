@@ -1,4 +1,4 @@
-FROM nansencenter/geospaas:2.4.0-slim
+FROM nansencenter/geospaas:2.5.1-slim
 
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${VIRTUAL_ENV}/lib"
 
