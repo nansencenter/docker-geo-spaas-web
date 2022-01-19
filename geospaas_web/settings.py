@@ -140,3 +140,4 @@ SESSION_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 
 # Extra settings
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
