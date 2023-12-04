@@ -4,25 +4,25 @@ on:
   push:
     branches: ['**']
   release:
-    types: [released]
+    types: [prereleased, released]
 env:
   IMAGE_NAME: "${{ secrets.DOCKER_ORG }}/geospaas_uwsgi"
 jobs:
   build_docker_image:
-    runs-on: 'ubuntu-20.04'
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        version:
+          - {'python': '3.7', 'latest': false}
+          - {'python': '3.8', 'latest': false}
+          - {'python': '3.9', 'latest': false}
+          - {'python': '3.10', 'latest': false}
+          - {'python': '3.11', 'latest': true}
+    env:
+      BASE_IMAGE: "${{ vars.DOCKER_ORG }}/geospaas:0.0.2-slim-python${{ matrix.version.python }}"
     steps:
       - name: 'Checkout repository'
         uses: actions/checkout@v4
-
-      - name: "Extract tag name"
-        id: get_version
-        run: |
-          if [[ $GITHUB_REF == refs/tags/* ]];then
-            TAG="${GITHUB_REF#refs/tags/}"
-          else
-            TAG='tmp'
-          fi
-          echo "::set-output name=VERSION::${TAG}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -45,10 +45,14 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: ${{ startsWith(github.ref, 'refs/tags/') }}
+          build-args: |
+            BASE_IMAGE=${{ env.BASE_IMAGE }}
+          push: ${{ github.event_name == 'release' }}
           tags: |
-            ${{ env.IMAGE_NAME }}:latest
-            ${{ env.IMAGE_NAME }}:${{ steps.get_version.outputs.VERSION }}
+            ${{ env.IMAGE_NAME }}:${{ github.ref_name }}-python${{ matrix.version.python }}
+            ${{ matrix.version.latest && format('{0}:{1}', env.IMAGE_NAME, github.ref_name) || '' }}
+            ${{ env.IMAGE_NAME }}:latest-python${{ matrix.version.python }}
+            ${{ matrix.version.latest && format('{0}:latest', env.IMAGE_NAME) || '' }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
