@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         version:
-          - {'python': '3.7', 'latest': false}
           - {'python': '3.8', 'latest': false}
           - {'python': '3.9', 'latest': false}
           - {'python': '3.10', 'latest': false}
