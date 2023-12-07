@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=nansencenter/geospaas:latest-slim
+ARG BASE_IMAGE=nansencenter/geospaas:latest
 FROM ${BASE_IMAGE} as base
 
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${VIRTUAL_ENV}/lib"
