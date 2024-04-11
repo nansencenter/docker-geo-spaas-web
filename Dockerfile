@@ -9,6 +9,8 @@ RUN conda install -y uwsgi \
 && find /opt/conda/ -follow -type f -name '*.a' -delete \
 && find /opt/conda/ -follow -type f -name '*.pyc' -delete
 
+RUN ln -s /usr/lib/x86_64-linux-gnu/libcrypt.so /usr/lib/x86_64-linux-gnu/libcrypt.so.2
+
 WORKDIR /opt/geospaas-app
 
 COPY geospaas_web/ geospaas_web
